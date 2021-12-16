@@ -57,16 +57,17 @@ class Sighting:
         this_user = user.User.get_user_id(user_info)
         this_sighting.user = this_user
         for row in results:
-            skeptic_data = {
-                "id": row["users.id"],
-                "first_name": row["first_name"],
-                "last_name": row["last_name"],
-                "email": row["email"],
-                "password": row["password"],
-                "created_at": row["users.created_at"],
-                "updated_at": row["users.updated_at"],
-            }
-            this_sighting.skeptics.append(user.User(skeptic_data))
+            if row['users.id'] != None:
+                skeptic_data = {
+                    "id": row["users.id"],
+                    "first_name": row["first_name"],
+                    "last_name": row["last_name"],
+                    "email": row["email"],
+                    "password": row["password"],
+                    "created_at": row["users.created_at"],
+                    "updated_at": row["users.updated_at"],
+                }
+                this_sighting.skeptics.append(user.User(skeptic_data))
         return this_sighting
 
     @classmethod
