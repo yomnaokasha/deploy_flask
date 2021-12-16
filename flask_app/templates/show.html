@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Welcome {{logged_user.first_name}} {{logged_user.last_name}}</h1>
+    <h2>Sasquatch Websighting</h2>
+    <a href="/dashboard">Dashboard</a>|
+    <form class="form" action="/logout" method="post">
+      <button type="submit">logout</button>
+    </form>
+    <p>location:{{sighting.location}}</p>
+    <p>what Happened:{{sighting.what_happened}}</p>
+    <p>Date{{sighting.date}}</p>
+    <p>num of Sasquatch:{{sighting.num_sasquatch}}</p>
+    <p>reported by: {{sighting.user.first_name}} {{sighting.user.last_name}}</p>
+
+    <p>Skeptics:</p>
+    {% for skeptic in sighting.skeptics %}
+    <p>{{skeptic.first_name}} {{skeptic.last_name}}</p>
+    {% endfor %} {% if is_skeptic %}
+    <form action="/skeptic/delete" method="post">
+      <input type="hidden" name="sighting_id" value="{{sighting.id}}" />
+      <button>Believe it</button>
+    </form>
+    {% else %}
+    <form action="/skeptic/add" method="post">
+      <input type="hidden" name="sighting_id" value="{{sighting.id}}" />
+      <button>I'm skeptical</button>
+    </form>
+    {% endif %}
+    <a href="/dashboard">dashboard</a>
+  </body>
+</html>

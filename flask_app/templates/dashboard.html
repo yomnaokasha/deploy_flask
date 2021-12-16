@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dashboard</title>
+  </head>
+  <body>
+    <h1>Welcome {{logged_user.first_name}} {{logged_user.last_name}}</h1>
+    <h2>Sasquatch Websighting</h2>
+    <a href="/new/sighting">Report a Sighting</a>|
+    <form class="form" action="/logout" method="post">
+      <button type="submit">logout</button>
+      <p>reported Sightings</p>
+      <table class="table">
+        <tbody>
+          {% for sighting in sightings %}
+          <tr>
+            <td>Skeptics: {{sighting.skeptics|length}} |</td>
+            <td>{{sighting.location}} {{sighting.date}} |</td>
+            <td>
+              reported by:{{sighting.user.first_name}}
+              {{sighting.user.last_name}}
+            </td>
+            <td>
+              <a href="/show/{{sighting.id}}">view </a>
+              {% if sighting.user_id == session.user_id %}
+              <a href="/edit/{{sighting.id}}">Edit</a>
+              <a href="/destroy/{{sighting.id}}">Delete</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>
